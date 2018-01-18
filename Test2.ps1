@@ -1,1 +1,1 @@
-get-pnpweb -Identity
+get-pnpweb -Identity "Laptop"
