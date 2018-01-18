@@ -1,1 +1,1 @@
-get-pnpweb
+get-pnpweb -Identity
