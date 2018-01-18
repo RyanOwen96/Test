@@ -1,1 +1,1 @@
-get-pnpweb -Identity "Laptop"
+get-pnpweb -Identity "Laptop" -Includes
