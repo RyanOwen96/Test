@@ -3,3 +3,4 @@ get-pnpweb -Identity "Laptop" -Includes
 Get-PnPUnifiedGroup -Identity
 Set-PnPList
 Set-PnPListItem
+#a
