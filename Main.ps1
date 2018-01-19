@@ -9,16 +9,16 @@ Connect-SPOService -Url $CredentialURL -Credential $Credential
 $GetGroup = Get-PnPUnifiedGroup
 $GetSite = Get-SPOSite
 $items = Get-PnPListItem -List "Main"
-$List1 = "Management"
-$List2 = "Employees"
-$List3 = "Activities"
-$List4 = "Equipment"
-$List5 = "Substances"
-$List6 = "Workplaces"
-$SiteField1 = "BSS Number"
-$SiteField2 = "Client Name"
-$SiteField3 = "Subjects"
-$SiteField4 = "Client"
+#$List1 = "Management"
+#$List2 = "Employees"
+#$List3 = "Activities"
+#$List4 = "Equipment"
+#$List5 = "Substances"
+#$List6 = "Workplaces"
+#$SiteField1 = "BSS Number"
+#$SiteField2 = "Client Name"
+#$SiteField3 = "Subjects"
+#$SiteField4 = "Client"
 
     foreach($Item in $items){
         #To check there a group
