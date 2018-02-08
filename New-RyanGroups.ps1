@@ -9,7 +9,7 @@ This allows the user to type in a group name or names.
 .Example
 Set-GroupSiteLists -Groups 'Dev1'
 #>
-function Make-RyanGroups{
+function New-RyanGroups{
 [cmdletBinding()]
     param(
          [Parameter(Mandatory=$True)]
