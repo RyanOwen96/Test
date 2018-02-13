@@ -14,7 +14,7 @@ foreach($item in $items){
     } else {
     
             Write-Host 'Has no group' -ForegroundColor Red
-            Make-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] 
+            New-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] 
                 }
 
 
@@ -25,4 +25,5 @@ foreach($item in $items){
 
 Disconnect-PnPOnline
 
-}    
+}
+

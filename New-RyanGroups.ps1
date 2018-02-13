@@ -19,11 +19,16 @@ function New-RyanGroups{
          [Parameter(Mandatory=$True)]
          $EmailAddresses,
          [Parameter()]
-         $Owner = 'Sysadmin@fletcher-dev.co.uk'
+         $Owner = 'Sysadmin@fletcher-dev.co.uk',
+         [Parameter()]
+         $Switch
          )
+
+if($Switch.ispresent){
 
     Write-Host 'creating group' $DisplayName -ForegroundColor Cyan 
     New-UnifiedGroup -DisplayName $DisplayName -Alias $Alias -Language (Get-Culture) -EmailAddresses $EmailAddresses -Owner $Owner
     Write-Host $DisplayName 'group was made' -ForegroundColor Green 
-      
- }
+
+    } else { Write-Host 'Group was not made'}
+}
