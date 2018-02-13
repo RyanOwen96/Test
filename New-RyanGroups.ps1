@@ -12,6 +12,8 @@ Set-GroupSiteLists -Groups 'Dev1'
 function New-RyanGroups{
 [cmdletBinding()]
     param(
+         [Parameter()]  
+         [switch]$MakeGroup,
          [Parameter(Mandatory=$True)]
          $DisplayName,
          [Parameter(Mandatory=$True)]
@@ -23,12 +25,14 @@ function New-RyanGroups{
          [Parameter()]
          $Switch
          )
+    if($MakeGroup -eq $true){
 
-if($Switch.ispresent){
+      Write-Host 'creating group' $DisplayName -ForegroundColor Cyan 
+      New-UnifiedGroup -DisplayName $DisplayName -Alias $Alias -Language (Get-Culture) -EmailAddresses $EmailAddresses -Owner $Owner
+      Write-Host $DisplayName 'group was made' -ForegroundColor Green 
 
-    Write-Host 'creating group' $DisplayName -ForegroundColor Cyan 
-    New-UnifiedGroup -DisplayName $DisplayName -Alias $Alias -Language (Get-Culture) -EmailAddresses $EmailAddresses -Owner $Owner
-    Write-Host $DisplayName 'group was made' -ForegroundColor Green 
+    }
 
-    } else { Write-Host 'Group was not made'}
-}
+ 
+      
+ }
