@@ -34,8 +34,5 @@ foreach($item in $items){
         #views
 
 Disconnect-PnPOnline
-
+       
 }
-
-
- 
