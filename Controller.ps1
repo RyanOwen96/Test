@@ -12,9 +12,6 @@ foreach($item in $items){
         Set-GroupSiteLists -Groups $Group.DisplayName -Department $item['Department']
         Get-ContactListinformation -ListitemID '8' -GroupAlias 'Dev1' 
 
-            } 
-
-        #set group
              
     } else {
     
