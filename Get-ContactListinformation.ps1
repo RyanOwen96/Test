@@ -1,4 +1,4 @@
-  <#
+<#
 .Synopsis
 Connects to a site or sites to change or add views.
 .Description
@@ -9,19 +9,32 @@ This allows the user to type in a group name or names.
 .Example
 Set-GroupSiteLists -Groups 'Dev1'
 #>
-function get-ContactListinformation{
+function Get-ContactListinformation{
 [cmdletBinding()]
     param(
+         [Parameter(Mandatory=$True)]  
+         $ListitemID,
          [Parameter()]  
-         $Group
+         $GroupAlias
          )
-     
-         $ContactItems = Get-PnPListItem -List 'Contact'
-         foreach($ContactItem in $ContactItems){
-             Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' 
-             set-pnpl
         
-         }
- }
 
- get-pnp
+        if($GroupAlias -eq $null){
+            Write-Host 'Not Connect'
+         write-host 'Null'}
+
+        if($GroupAlias -cnotcontains $null){
+            Write-Host 'Connect'
+            Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/Sites/'+ $GroupAlias) -UseWebLogin
+         }
+        
+        $Contacts = Get-PnPListItem -List 'Contact'
+        Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -UseWebLogin
+        foreach($Contact in $Contacts){
+            Write-Host $Contact['Postcode']
+            Set-PnPListItem -List 'Main' -Identity $ListitemID -Values @{'Postcode'= $Contact['Postcode'];'Phone'=$Contact['Phone'];'City'=$Contact['City']}
+        }
+
+}
+
+
