@@ -10,12 +10,7 @@ foreach($item in $items){
         Write-Host 'Has a group' -ForegroundColor Cyan
         $Group = Get-RyanGroup -Url $Item['BSS']
         Set-GroupSiteLists -Groups $Group.DisplayName -Department $item['Department']
-
-        $Contactinfomation = Get-PnPListItem -List 'Contact'
-        Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -UseWebLogin
-            foreach($Contactinfo in $Contactinfomation){
-                Set-PnPListItem -List 'Main' -Identity $item.id -Values @{'PostCode'=$Contactinfo['Postcode']} -Identityh
-
+        Get-ContactListinformation -ListitemID '8' -GroupAlias 'Dev1' 
 
             } 
 
