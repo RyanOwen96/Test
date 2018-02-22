@@ -33,12 +33,40 @@ function Set-SiteColumns{
 
         
         if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}){
-            Write-Host 'Site Column Found'
+            Write-Host $BSSNumber 'Site Column Found'
+            $GetBSSNumber = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}
+            Set-PnPField -Identity $GetBSSNumber.Title -Values @{'Title'=$BSSNumber} -UpdateExistingLists 
         }else{
-            Write-Host 'Site Column cannot be found' -ForegroundColor Red
-            Add-PnPField -DisplayName 'BSS Number' -InternalName 'BSS Number' -Type Text -Group "Fletchers"
-            Write-Host 'BSS Number was created' -ForegroundColor Green
-        }
+            Write-Host $BSSNumber 'cannot be found' -ForegroundColor Red
+            Add-PnPField -DisplayName $BSSNumber -InternalName 'BSS Number' -Type Text -Group "Fletchers"
+            Write-Host $BSSNumber 'was created' -ForegroundColor Green}
+#------------------------------------------------------------------------------------------------------------------------------
+        if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Client Name'}){
+            Write-Host $ClientName 'Site Column Found'
+            $GetClient = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Client Name'}
+            Set-PnPField -Identity $GetClient.Title -Values @{'Title'=$GetClient} -UpdateExistingLists 
+        }else{
+            Write-Host $ClientName 'cannot be found' -ForegroundColor Red
+            Add-PnPField -DisplayName $ClientName -InternalName 'Client Name' -Type Text -Group "Fletchers"
+            Write-Host $ClientName 'was created' -ForegroundColor Green}
+#------------------------------------------------------------------------------------------------------------------------------
+        if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Subjects'}){
+            Write-Host $Subjects 'Site Column Found'
+            $GetSubjects = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}
+            Set-PnPField -Identity $GetSubjects.Title -Values @{'Title'=$Subjects} -UpdateExistingLists 
+        }else{
+            Write-Host $Subjects 'cannot be found' -ForegroundColor Red
+            Add-PnPField -DisplayName $Subjects -InternalName 'Subjects' -Type Text -Group "Fletchers"
+            Write-Host $Subjects 'was created' -ForegroundColor Green}
+#------------------------------------------------------------------------------------------------------------------------------
+        if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Client'}){
+            Write-Host $Client 'Site Column Found'
+            $GetClient = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}
+            Set-PnPField -Identity $GetClient.Title -Values @{'Title'=$Client} -UpdateExistingLists 
+        }else{
+            Write-Host $Client 'cannot be found' -ForegroundColor Red
+            Add-PnPField -DisplayName $Client -InternalName 'Client' -Type Text -Group "Fletchers"
+            Write-Host $Client 'was created' -ForegroundColor Green}
 
 }
 
