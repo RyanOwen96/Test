@@ -20,19 +20,31 @@ function Get-ContactListinformation{
         
 
         if($GroupAlias -eq $null){
-            Write-Host 'Not Connect'
-         write-host 'Null'}
+            $Web = get-pnpweb 
+            Write-Host 'Getting' $web.Title 'contact information' -ForegroundColor Green }
 
         if($GroupAlias -cnotcontains $null){
-            Write-Host 'Connect'
+            Write-Host 'Connecting to' $GroupAlias -ForegroundColor Green
             Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/Sites/'+ $GroupAlias) -UseWebLogin
          }
-        
+         
         $Contacts = Get-PnPListItem -List 'Contact'
         Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -UseWebLogin
         foreach($Contact in $Contacts){
-            Write-Host $Contact['Postcode']
-            Set-PnPListItem -List 'Main' -Identity $ListitemID -Values @{'Postcode'= $Contact['Postcode'];'Phone'=$Contact['Phone'];'City'=$Contact['City']}
+
+            if($contact['Postcode'] -cnotcontains $null){Write-Host 'Postcode:'$Contact['Postcode']}
+            if($contact['Postcode'] -eq $null){write-host 'Postcode = N/A' 
+            $contact['Postcode'] = 'N/A'}
+
+            if($contact['City'] -cnotcontains $null){Write-Host 'City:'$Contact['City']}
+            if($contact['City'] -eq $null){Write-Host 'City = N/A'
+            $contact['City'] = 'N/A'}
+
+            if($contact['Phone'] -cnotcontains $null){Write-Host 'Phone:'$Contact['Phone']}
+            if($contact['Phone'] -eq $null){Write-Host 'Phone = N/A'
+            $contact['Phone'] = 'N/A'}
+
+            Set-PnPListItem -List 'Main' -Identity $ListitemID -Values @{'Postcode'= $Contact['Postcode'];'Phone'=$Contact['Phone'];'City'=$Contact['City']} | Format-Table -HideTableHeaders
         }
 
 }

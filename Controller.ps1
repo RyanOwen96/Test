@@ -10,21 +10,25 @@ foreach($item in $items){
         Write-Host 'Has a group' -ForegroundColor Cyan
         $Group = Get-RyanGroup -Url $Item['BSS']
         Set-GroupSiteLists -Groups $Group.DisplayName -Department $item['Department']
-        Get-ContactListinformation -ListitemID '8' -GroupAlias 'Dev1' 
 
+        #Set-SiteColumns -Site''
+        #lists columns -Site ''
+
+        Get-ContactListinformation -ListitemID $Item.Id
+
+
+        #setting the list to Group items / Email / Site
+ 
              
-    } else {
+            } else {
     
             Write-Host 'Has no group' -ForegroundColor Red
             New-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] -MakeGroup:$false
-                }
+           }
 
-
-        #site Columns
-        Set-GroupSiteLists -Groups $Group.DisplayName 
-        #lists columns
-        #views
 
 Disconnect-PnPOnline
        
 }
+
+#Set-ListURl -List'' -Site'' 
