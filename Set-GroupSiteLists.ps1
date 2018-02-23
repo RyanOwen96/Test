@@ -43,7 +43,7 @@ function Set-GroupSiteLists{
             $GetContact = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Contact'}
             if($GetContact.EntityTypeName -eq 'Contact'){
                 Write-Host 'Contact list has been found | Title: Contact' -ForegroundColor Gray
-                Set-PnPList -Identity $GetContact.title -Title 'Contact'
+                Set-PnPList -Identity $GetContact.title -Title 'Contact' 
                 $Contact1 = 'Yes'}
 
                 if($Contact1 -eq 'No'){
