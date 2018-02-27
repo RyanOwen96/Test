@@ -1,5 +1,5 @@
  #To connect to the services 
-Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -UseWebLogin
+Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -Credentials Sysadmin
 Connect-PnPMicrosoftGraph -AppId 671390a8-6a65-43c0-a3db-adcd615074ad -AppSecret "qagedHTOEW195%{?)ybOE03" -AADDomain "Fletcher-dev.co.uk"
 #Credential commands 
 $CredentialURL = "https://sharepoint121-admin.sharepoint.com/"
@@ -46,7 +46,7 @@ $items = Get-PnPListItem -List "Main"
         #To check the group site is  there 
         $SiteStatus = "No Site"
         If($GetSite | Where-Object{$_.Url -eq $Group1.SiteUrl}){
-            Connect-PnPOnline -Url ("https://sharepoint121.sharepoint.com/sites/" + $Item["BSS"].ToString()) -UseWebLogin
+            Connect-PnPOnline -Url ("https://sharepoint121.sharepoint.com/sites/" + $Item["BSS"].ToString()) -Credentials Sysadmin
             $OutCome = 2 
             $SiteStatus = "There a site"
             Write-Host $SiteStatus -ForegroundColor Green -BackgroundColor Black -Separator " & "
@@ -132,7 +132,7 @@ $items = Get-PnPListItem -List "Main"
                 Write-Host $NewListOutcome -ForegroundColor Green -BackgroundColor Black
             }
             #Set the field items
-            Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -UseWebLogin
+            Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -Credentials Sysadmin
             if($item["Title"] + " Group Found"){$Group = Get-PnPUnifiedGroup -Identity $Item["GroupID"]
             Set-PnPListItem -List "Main" -Identity $Item.Id -Values @{"GroupID" = $Group.GroupId}}
             if($Status -eq $Item["Title"] + " Group Made"){$Group = Get-PnPUnifiedGroup -Identity $Item["BSS"]

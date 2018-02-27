@@ -29,7 +29,7 @@ function Set-SiteColumns{
             if($GetGroup.SiteUrl -eq $Web.Url){
                  Write-Host 'Match'
             } else {Write-Host 'Dont Match'
-            Connect-PnPOnline -Url ($GetGroup.SiteUrl) -UseWebLogin}
+            Connect-PnPOnline -Url ($GetGroup.SiteUrl) -Credentials Sysadmin}
 
         
         if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}){

@@ -16,7 +16,7 @@ function Get-RyanConnection{
 
     #To connect to the services 
     Write-Host "Connecting to PnP online" -ForegroundColor Cyan     
-    Connect-PnPOnline -Url ("https://sharepoint121.sharepoint.com/"+$PnpSiteUrl) -UseWebLogin
+    Connect-PnPOnline -Url ("https://sharepoint121.sharepoint.com/"+$PnpSiteUrl) -Credentials Sysadmin
     Write-Host "Connecting to PnPonline" -ForegroundColor Green
     Write-Host "Connected to PnPGraph" -ForegroundColor Cyan        
     Connect-PnPMicrosoftGraph -AppId 671390a8-6a65-43c0-a3db-adcd615074ad -AppSecret "qagedHTOEW195%{?)ybOE03" -AADDomain "Fletcher-dev.co.uk"

@@ -33,7 +33,7 @@ function Set-GroupSiteLists{
         $FoundGroup = "No"
 
         if(Get-PnPUnifiedGroup -Identity $Group){
-            Connect-PnPOnline -Url ($GetGroup.SiteUrl) -UseWebLogin
+            Connect-PnPOnline -Url ($GetGroup.SiteUrl) -Credentials Sysadmin
             $Text =" Connected to site " + $GetGroup.DisplayName 
             Write-Host $Text -ForegroundColor Green
             $FoundGroup = "Yes"

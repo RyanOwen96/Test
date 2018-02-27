@@ -25,11 +25,11 @@ function Get-ContactListinformation{
 
         if($GroupAlias -cnotcontains $null){
             Write-Host 'Connecting to' $GroupAlias -ForegroundColor Green
-            Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/Sites/'+ $GroupAlias) -UseWebLogin
+            Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/Sites/'+ $GroupAlias) -Credentials Sysadmin
          }
          
         $Contacts = Get-PnPListItem -List 'Contact'
-        Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -UseWebLogin
+        Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -Credentials Sysadmin
         foreach($Contact in $Contacts){
 
             if($contact['Postcode'] -cnotcontains $null){Write-Host 'Postcode:'$Contact['Postcode']}
