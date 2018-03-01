@@ -30,8 +30,7 @@ function Set-SiteColumns{
                  Write-Host 'Match'
             } else {Write-Host 'Dont Match'
             Connect-PnPOnline -Url ($GetGroup.SiteUrl) -Credentials Sysadmin}
-
-        
+#------------------------------------------------------------------------------------------------------------------------------        
         if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}){
             Write-Host $BSSNumber 'Site Column Found'
             $GetBSSNumber = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}
@@ -44,7 +43,7 @@ function Set-SiteColumns{
         if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Client Name'}){
             Write-Host $ClientName 'Site Column Found'
             $GetClient = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Client Name'}
-            Set-PnPField -Identity $GetClient.Title -Values @{'Title'=$GetClient} -UpdateExistingLists 
+            Set-PnPField -Identity $GetClient.Title -Values @{'Title'=$ClientName} -UpdateExistingLists 
         }else{
             Write-Host $ClientName 'cannot be found' -ForegroundColor Red
             Add-PnPField -DisplayName $ClientName -InternalName 'Client Name' -Type Text -Group "Fletchers"
@@ -52,7 +51,7 @@ function Set-SiteColumns{
 #------------------------------------------------------------------------------------------------------------------------------
         if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Subjects'}){
             Write-Host $Subjects 'Site Column Found'
-            $GetSubjects = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}
+            $GetSubjects = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Subjects'}
             Set-PnPField -Identity $GetSubjects.Title -Values @{'Title'=$Subjects} -UpdateExistingLists 
         }else{
             Write-Host $Subjects 'cannot be found' -ForegroundColor Red
@@ -61,7 +60,7 @@ function Set-SiteColumns{
 #------------------------------------------------------------------------------------------------------------------------------
         if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Client'}){
             Write-Host $Client 'Site Column Found'
-            $GetClient = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}
+            $GetClient = Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'Client'}
             Set-PnPField -Identity $GetClient.Title -Values @{'Title'=$Client} -UpdateExistingLists 
         }else{
             Write-Host $Client 'cannot be found' -ForegroundColor Red

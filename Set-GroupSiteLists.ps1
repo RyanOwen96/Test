@@ -166,4 +166,4 @@ function Set-GroupSiteLists{
         if($FoundGroup -eq "No"){Write-Host $GroupName 'Group Not Found' -ForegroundColor Red}
 
      }#end of group foreach
-}#end param
+    }#end param

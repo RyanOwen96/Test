@@ -16,40 +16,38 @@ function Set-ListSiteColumns{
          $Groups,
          [Parameter(Mandatory=$True)]  
          $Lists,
-         [Parameter()]  
-         $Management,
-         [Parameter()]  
-         $Employees,
-         [Parameter()]  
-         $WorkActivities,
-         [Parameter()]  
-         $WorkEquipment,
-         [Parameter()]  
-         $Substances,
-         [Parameter()]  
-         $Workplaces
+         [Parameter()]
+         [ValidateSet('BSS Number','Client Name','Subjects','Client')]
+         $SiteFields
          )
 
         foreach($Group in $Groups){
-            $Group = 'Dev1'
             $Connecting =" Connecting to site " + $Group
-            Write-Host $Connecting -ForegroundColor Cyan
             $GetGroup = Get-PnPUnifiedGroup -Identity $Group
-            $FoundGroup = "No"
-            if(Get-PnPUnifiedGroup -Identity $Group){
+            $Groups = Get-PnPUnifiedGroup
+            if($Group -cnotmatch $Groups){
+                Write-Host $Connecting -ForegroundColor Cyan
                 Connect-PnPOnline -Url ($GetGroup.SiteUrl) -Credentials Sysadmin
                 $Text =" Connected to site " + $GetGroup.DisplayName 
                 Write-Host $Text -ForegroundColor Green
-                $FoundGroup = "Yes"}
+                
+                    foreach($list in $lists){
 
-                    foreach($list in $Lists){
-                    Add-PnPField -List $list -Field 
-            }
+                            foreach($SiteField in $SiteFields){
+                                
+                                if(Get-PnPField -Group 'Fletchers'| Where-Object {$_.Title -eq $SiteField}){
+                                        Write-Host $SiteField 'Found field' -ForegroundColor Magenta
+                                        if(Get-PnPField -List $list -Identity $SiteField){
+                                            Write-Host $SiteField 'Already in' $list
+                                        }else{
+                                            Add-PnPField -List $list -Field $SiteField
+                                            Write-Host $SiteField 'added to' $list     
+                                        }
+ 
+                                }else{Write-Host 'There is no site field with the name' $SiteField}
+                            }
 
-        }
-
+                    }
+                }else{Write-Host 'No group found'}
     }
-
-
-
-Get-PnPField -Group 'Fletchers' -Identity 'BSS Number'
+}

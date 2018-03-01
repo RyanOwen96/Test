@@ -19,7 +19,7 @@ function Get-RyanConnection{
     Connect-PnPOnline -Url ("https://sharepoint121.sharepoint.com/"+$PnpSiteUrl) -Credentials Sysadmin
     Write-Host "Connecting to PnPonline" -ForegroundColor Green
     Write-Host "Connected to PnPGraph" -ForegroundColor Cyan        
-    Connect-PnPMicrosoftGraph -AppId 671390a8-6a65-43c0-a3db-adcd615074ad -AppSecret "qagedHTOEW195%{?)ybOE03" -AADDomain "Fletcher-dev.co.uk"
+    Connect-PnPOnline -AppId 671390a8-6a65-43c0-a3db-adcd615074ad -AppSecret "qagedHTOEW195%{?)ybOE03" -AADDomain "Fletcher-dev.co.uk"
     Write-Host "Connected to PnPGraph" -ForegroundColor Green  
     #Credential commands for SPO
     $CredentialURL = "https://sharepoint121-admin.sharepoint.com/"

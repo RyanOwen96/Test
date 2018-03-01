@@ -1,5 +1,4 @@
-﻿
-Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -UseWebLogin
+﻿Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -Credentials sysadmin
 
 $items = Get-PnPListItem -List 'Main'
 foreach($item in $items){
@@ -10,12 +9,10 @@ foreach($item in $items){
         Write-Host 'Has a group' -ForegroundColor Cyan
         $Group = Get-RyanGroup -Url $Item['BSS']
         Set-GroupSiteLists -Groups $Group.DisplayName -Department $item['Department']
-
-        #Set-SiteColumns -Site''
-        #lists columns -Site ''
-
-        Get-ContactListinformation -ListitemID $Item.Id
-
+        Set-SiteColumns -Group $group.DisplayName 
+        Set-ListSiteColumns -Groups $group.DisplayName -Lists 'Workplaces'-SiteFields 'BSS Number','Subjects','Client Name','Client'
+        Get-ContactListinformation -ListitemID $Item.Id 
+ 
 
         #setting the list to Group items / Email / Site
  
@@ -23,12 +20,12 @@ foreach($item in $items){
             } else {
     
             Write-Host 'Has no group' -ForegroundColor Red
-            New-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] -MakeGroup:$false
+            New-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] -MakeGroup
            }
-
-
-Disconnect-PnPOnline
-       
 }
 
 #Set-ListURl -List'' -Site'' 
+
+
+Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/sites/dev1" -Credentials sysadmin
+Get-PnPField -Group 'Fletchers'
