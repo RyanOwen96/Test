@@ -12,8 +12,8 @@ Set-GroupSiteLists -Groups 'Dev1'
 function Set-ListSiteColumns{
 [cmdletBinding()]
     param(
-         [Parameter(Mandatory=$True)]  
-         $Groups,
+         [Parameter()]  
+         [String[]]$Groups,
          [Parameter(Mandatory=$True)]  
          $Lists,
          [Parameter()]
@@ -22,32 +22,41 @@ function Set-ListSiteColumns{
          )
 
         foreach($Group in $Groups){
-            $Connecting =" Connecting to site " + $Group
-            $GetGroup = Get-PnPUnifiedGroup -Identity $Group
-            $Groups = Get-PnPUnifiedGroup
-            if($Group -cnotmatch $Groups){
-                Write-Host $Connecting -ForegroundColor Cyan
-                Connect-PnPOnline -Url ($GetGroup.SiteUrl) -Credentials Sysadmin
-                $Text =" Connected to site " + $GetGroup.DisplayName 
-                Write-Host $Text -ForegroundColor Green
-                
-                    foreach($list in $lists){
+            Write-Host 'Connecting to' $Group -ForegroundColor Cyan
+            Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/sites/'+$Group) -Credentials Sysadmin
+            Write-Host 'Conneted to' $Group -ForegroundColor Green
 
+                    foreach($list in $lists){
+                        Write-Host $list 'List:'
                             foreach($SiteField in $SiteFields){
                                 
                                 if(Get-PnPField -Group 'Fletchers'| Where-Object {$_.Title -eq $SiteField}){
-                                        Write-Host $SiteField 'Found field' -ForegroundColor Magenta
-                                        if(Get-PnPField -List $list -Identity $SiteField){
-                                            Write-Host $SiteField 'Already in' $list
-                                        }else{
-                                            Add-PnPField -List $list -Field $SiteField
-                                            Write-Host $SiteField 'added to' $list     
-                                        }
- 
-                                }else{Write-Host 'There is no site field with the name' $SiteField}
+                                        
+                                            if(Get-PnPField -List $list | Where-Object {$_.Title -eq $SiteField}){
+                                                Write-Host '-' $SiteField 'already in' $list
+                                            }else{Add-PnPField -List $list -Field $SiteField
+                                                Write-Host $SiteField 'added to' $list}
+
+                                } else {Write-Host 'There is no site field with the name' $SiteField -ForegroundColor Red}
                             }
 
                     }
-                }else{Write-Host 'No group found'}
+            }
+
+        if($Groups -eq $null){
+            Write-Host 'No Group'
+                foreach($list in $lists){
+                    Write-Host $list 'List:'
+                        foreach($SiteField in $SiteFields){
+                            if(Get-PnPField -Group 'Fletchers'| Where-Object {$_.Title -eq $SiteField}){
+                                if(Get-PnPField -List $list | Where-Object {$_.Title -eq $SiteField}){
+                                    Write-Host '-' $SiteField 'already in' $list
+                                }else{Add-PnPField -List $list -Field $SiteField
+                                    Write-Host $SiteField 'added to' $list}
+                    } else {Write-Host 'There is no site field with the name' $SiteField -ForegroundColor Red}
+                }
+
+        }
+
     }
 }

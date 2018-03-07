@@ -17,7 +17,4 @@ function Get-RyanGroup{
          )
 
          Get-PnPUnifiedGroup | Where-Object {$_.SiteUrl -eq 'https://sharepoint121.sharepoint.com/sites/'+ $Url}
-
-
-
 }

@@ -15,36 +15,48 @@ function Get-ContactListinformation{
          [Parameter(Mandatory=$True)]  
          $ListitemID,
          [Parameter()]  
-         $GroupAlias
+         $Group
          )
         
 
-        if($GroupAlias -eq $null){
+        if($Group -eq $null){
             $Web = get-pnpweb 
-            Write-Host 'Getting' $web.Title 'contact information' -ForegroundColor Green }
+            Write-Host 'Getting' $web.Title 'contact information' -ForegroundColor Green 
+            $Contacts = Get-PnPListItem -List 'Contact'
+            Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -Credentials Sysadmin
+                foreach($Contact in $Contacts){
+                    if($contact['Postcode'] -cnotcontains $null){Write-Host 'Postcode:'$Contact['Postcode']}
+                    if($contact['Postcode'] -eq $null){write-host 'Postcode = N/A' 
+                        $contact['Postcode'] = 'N/A'}
+                    if($contact['City'] -cnotcontains $null){Write-Host 'City:'$Contact['City']}
+                    if($contact['City'] -eq $null){Write-Host 'City = N/A'
+                        $contact['City'] = 'N/A'}
+                    if($contact['Phone'] -cnotcontains $null){Write-Host 'Phone:'$Contact['Phone']}
+                    if($contact['Phone'] -eq $null){Write-Host 'Phone = N/A'
+                        $contact['Phone'] = 'N/A'}
+                Set-PnPListItem -List 'Main' -Identity $ListitemID -Values @{'Postcode'= $Contact['Postcode'];'Phone'=$Contact['Phone'];'City'=$Contact['City']} | Format-Table -HideTableHeaders
+            }
 
-        if($GroupAlias -cnotcontains $null){
-            Write-Host 'Connecting to' $GroupAlias -ForegroundColor Green
-            Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/Sites/'+ $GroupAlias) -Credentials Sysadmin
-         }
-         
-        $Contacts = Get-PnPListItem -List 'Contact'
-        Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -Credentials Sysadmin
-        foreach($Contact in $Contacts){
+        }
 
-            if($contact['Postcode'] -cnotcontains $null){Write-Host 'Postcode:'$Contact['Postcode']}
-            if($contact['Postcode'] -eq $null){write-host 'Postcode = N/A' 
-            $contact['Postcode'] = 'N/A'}
-
-            if($contact['City'] -cnotcontains $null){Write-Host 'City:'$Contact['City']}
-            if($contact['City'] -eq $null){Write-Host 'City = N/A'
-            $contact['City'] = 'N/A'}
-
-            if($contact['Phone'] -cnotcontains $null){Write-Host 'Phone:'$Contact['Phone']}
-            if($contact['Phone'] -eq $null){Write-Host 'Phone = N/A'
-            $contact['Phone'] = 'N/A'}
-
-            Set-PnPListItem -List 'Main' -Identity $ListitemID -Values @{'Postcode'= $Contact['Postcode'];'Phone'=$Contact['Phone'];'City'=$Contact['City']} | Format-Table -HideTableHeaders
+        if($Group -cnotcontains $null){
+                Write-Host 'Connecting to' $Group -ForegroundColor Green
+                Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/Sites/'+ $Group) -Credentials Sysadmin
+                $Contacts = Get-PnPListItem -List 'Contact'
+                Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -Credentials Sysadmin
+                    foreach($Contact in $Contacts){
+                        if($contact['Postcode'] -cnotcontains $null){Write-Host 'Postcode:'$Contact['Postcode']}
+                        if($contact['Postcode'] -eq $null){write-host 'Postcode = N/A' 
+                            $contact['Postcode'] = 'N/A'}
+                        if($contact['City'] -cnotcontains $null){Write-Host 'City:'$Contact['City']}
+                        if($contact['City'] -eq $null){Write-Host 'City = N/A'
+                            $contact['City'] = 'N/A'}
+                        if($contact['Phone'] -cnotcontains $null){Write-Host 'Phone:'$Contact['Phone']}
+                        if($contact['Phone'] -eq $null){Write-Host 'Phone = N/A'
+                            $contact['Phone'] = 'N/A'}
+                        Set-PnPListItem -List 'Main' -Identity $ListitemID -Values @{'Postcode'= $Contact['Postcode'];'Phone'=$Contact['Phone'];'City'=$Contact['City']} | Format-Table -HideTableHeaders
+                    }
+            
         }
 
 }

@@ -11,9 +11,8 @@ Get-RyanConnection, then type password
 function Get-RyanConnection{
     param(
          [Parameter()]
-         [string]$PnpSiteUrl
+         $PnpSiteUrl
          )
-
     #To connect to the services 
     Write-Host "Connecting to PnP online" -ForegroundColor Cyan     
     Connect-PnPOnline -Url ("https://sharepoint121.sharepoint.com/"+$PnpSiteUrl) -Credentials Sysadmin

@@ -16,15 +16,12 @@ function Get-RyanListItems{
          $List,
          $ID 
          )
-
-
          
 
          Write-Host '----------------------------------------'
          Write-Host 'Group:'$item['Title']
-         write-host 'ID   :' $item['BSS']
+         write-host 'ID   :'$item['BSS']
          Write-Host 'Email:'$item['Email']
-         Write-Host 'Site :' $item['Site']
-                      
+         Write-Host 'Site :'$item['Site']
 
 }
