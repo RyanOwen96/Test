@@ -16,7 +16,7 @@ function Set-GroupSiteLists{
          [string[]]$Groups,
          [Parameter(Mandatory=$True)]
          [ValidateSet('HR','H&S','Construction')]
-         $Department,
+         [String[]]$Departments,
          $Management = 'Management',
          $Employees ='Employees',
          $WorkActivities ='Work Activities',
@@ -25,6 +25,119 @@ function Set-GroupSiteLists{
          $Workplaces = 'Workplaces'
          )
          
+    if($Groups -cnotcontains $null){
+        foreach($Group in $Groups){
+            $Web = get-pnpweb
+            $W = $web.Url -replace 'https://sharepoint121.sharepoint.com/sites/',''
+                if($W -cnotmatch $Group){
+                    Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/sites/'+ $group) -Credentials sysadmin
+                    Write-Host 'Now connected to' $Group
+                }
+                foreach($Department in $Departments){
+                    if($Department -eq 'HR'){
+                        write-host 'HR'
+                        $Management1 ='Yes'
+                        $Employees1 ='Yes'
+                        $WorkActivities1 ='No'
+                        $WorkEquipment1 = 'No'
+                        $Substances1 = 'No'
+                        $Workplaces1 = 'No'
+                    }
+                    if($Department -eq 'H&S'){
+                        Write-Host 'H&S'
+                        $Management1 ='Yes'
+                        $Employees1 ='No'
+                        $WorkActivities1 ='No'
+                        $WorkEquipment1 = 'No'
+                        $Substances1 = 'Yes'
+                        $Workplaces1 = 'Yes'
+                    }
+                    if($Department -eq 'Construction'){
+                        Write-Host 'Construction'
+                        $Management1 ='Yes'
+                        $Employees1 ='No'
+                        $WorkActivities1 ='No'
+                        $WorkEquipment1 = 'No'
+                        $Substances1 = 'No'
+                        $Workplaces1 = 'Yes'
+                    }
+                    #Contact
+                    $GetContact = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Contact'}
+                    if($GetContact.EntityTypeName -eq 'Contact'){
+                        if($GetContact.title -eq 'Contact'){
+                            Write-Host 'Contact list has been found | Title: Contact' -ForegroundColor Gray
+                        }else{
+                            write-host 'Title was' $GetContact.Title 'now Contact' -ForegroundColor Red
+                            Set-PnPList -Identity $GetContact.title -Title 'Contact' 
+                        }
+                    }else{
+                        Write-Host 'Contact list has not been found' -ForegroundColor Red
+                        New-PnPList -Title 'Contact' -Template GenericList -Url 'Contact' -OnQuickLaunch
+                        Write-Host 'Contact list has now been made' -ForegroundColor Green
+                    }
+                    #Management
+                    if($Management1 -eq 'Yes'){
+                        $GetManagement = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Management'}
+                        if($GetManagement.EntityTypeName -eq 'Management'){
+                                if($GetManagement.title -eq $Management){
+                                    Write-Host $Management 'list has been found | Title:'$Management -ForegroundColor Gray 
+                                }else{
+                                    write-host 'Title was' $GetManagement.Title 'now' $Management -ForegroundColor Red
+                                    Set-PnPList -Identity $GetManagement.title -Title $Management
+                                }
+                        }else{
+                            Write-Host 'The list' $Management 'was not found' -ForegroundColor Red
+                            New-PnPList -Title $Management -Template GenericList -Url $Management -OnQuickLaunch 
+                            Write-Host $Management 'list has now been made' -ForegroundColor Green
+                        }
+                    }
+                    #Employees
+                    if($Employees1 -eq 'Yes'){
+                        $GetEmployees = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Employees'}
+                        if($GetEmployees.EntityTypeName -eq 'Management'){
+                                if($GetEmployees.title -eq $Employees){
+                                    Write-Host $Employees 'list has been found | Title:'$Employees -ForegroundColor Gray 
+                                }else{
+                                    write-host 'Title was' $GetEmployees.Title 'now' $Employees -ForegroundColor Red
+                                    Set-PnPList -Identity $GetEmployees.title -Title $Employees
+                                }
+                        }else{
+                            Write-Host 'The list' $Employees 'was not found' -ForegroundColor Red
+                            New-PnPList -Title $Employees -Template GenericList -Url $Employees -OnQuickLaunch 
+                            Write-Host $Employees 'list has now been made' -ForegroundColor Green
+                        }
+                    }
+                    #WorkActivities1
+                    if($WorkActivities1 -eq 'Yes'){
+                        $GetWorkActivities = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'WorkActivities'}
+                        if($GetEmployees.EntityTypeName -eq 'WorkActivities'){
+                                if($GetWorkActivities.title -eq $WorkActivities){
+                                    Write-Host $WorkActivities 'list has been found | Title:'$WorkActivities -ForegroundColor Gray 
+                                }else{
+                                    write-host 'Title was' $GetEmployees.Title 'now' $WorkActivities -ForegroundColor Red
+                                    Set-PnPList -Identity $GetEmployees.title -Title $WorkActivities
+                                }
+                        }else{
+                            Write-Host 'The list' $WorkActivities 'was not found' -ForegroundColor Red
+                            New-PnPList -Title $WorkActivities -Template GenericList -Url $Employees -OnQuickLaunch 
+                            Write-Host $WorkActivities 'list has now been made' -ForegroundColor Green
+                        }
+                    }
+
+
+
+                }#Foreach Department
+            }#Foreach Group
+        }#Group $null
+    if($Groups -eq $null){}
+
+
+}
+
+
+
+<#
+
     foreach($Group in $Groups){
         $Web = get-pnpweb
         $W = $web.Url -replace 'https://sharepoint121.sharepoint.com/sites/',''
@@ -47,22 +160,24 @@ function Set-GroupSiteLists{
                 Write-Host 'Contact list has now been made' -ForegroundColor Green}
 
 
-##########################################################################################################################################################################
+#################################################################################################################################################
             if($Department -eq 'HR'){
-                $Management1 = 'No'
-                $Employees1 = 'No'
     #-------------------------------------------------------------------------------------------------------------#
                 $GetManagement = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Management'}
                 if($GetManagement.EntityTypeName -eq 'Management'){
                     Write-Host 'Management list has been found | Title:'$Management -ForegroundColor Gray
-                    Set-PnPList -Identity $GetManagement.title -Title $Management
-                    $Management1 = 'Yes'}
-    
-                    if($Management1 -eq 'No'){
-                    Write-Host 'Management list has not been found' -ForegroundColor Red
-                    New-PnPList -Title $Management -Template GenericList -Url $Management -OnQuickLaunch
-                    Write-Host 'Management list has now been made' -ForegroundColor Green}
-    
+                        if($GetManagement.title -eq 'A'){
+                            Write-Host 'Both title match' 
+                        }else{
+                            write-host 'Title was' $GetManagement.Title 'now' $Management -ForegroundColor Red
+                            Set-PnPList -Identity $GetManagement.title -Title $Management
+                        }
+                    }else{
+                    Write-Host 'The list' $Management 'Was not found' -ForegroundColor Red
+                    New-PnPList -Title $Management -Template GenericList -Url $Management -OnQuickLaunch 
+                    Write-Host 'Management list has now been made' -ForegroundColor Green
+                    }
+                }
     #-------------------------------------------------------------------------------------------------------------#
                 $GetEmployees = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Employees'}
                 if($GetEmployees.EntityTypeName -eq 'Employees'){
@@ -76,7 +191,7 @@ function Set-GroupSiteLists{
                     Write-Host 'Employees list has now been made' -ForegroundColor Green}
 
             }
-##########################################################################################################################################################################
+#################################################################################################################################################
             if($Department -eq 'H&S'){
                 $Management1 = 'No'
                 $WorkEquipment1 = 'No'
@@ -129,7 +244,7 @@ function Set-GroupSiteLists{
                 Write-Host 'Workplaces list has now been made' -ForegroundColor Green}
 #--------------------------------------------------------------------------------------------------------------#              
             }
-##########################################################################################################################################################################
+#################################################################################################################################################
             if($Department -eq 'Construction'){
                 $Management1 = 'No'
                 $Workplaces1 = 'No'
@@ -157,14 +272,14 @@ function Set-GroupSiteLists{
                 New-PnPList -Title $Workplaces -Template GenericList -Url $Workplaces -OnQuickLaunch
                 Write-Host 'Workplaces list has now been made' -ForegroundColor Green}
 #--------------------------------------------------------------------------------------------------------------#  
-##########################################################################################################################################################################
+#################################################################################################################################################
 
 
             }            
         }
    }
 
-
+#>
 
 
   

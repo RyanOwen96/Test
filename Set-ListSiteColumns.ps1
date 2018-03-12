@@ -20,29 +20,25 @@ function Set-ListSiteColumns{
          [ValidateSet('BSS Number','Client Name','Subjects','Client')]
          $SiteFields
          )
-
-        foreach($Group in $Groups){
-            Write-Host 'Connecting to' $Group -ForegroundColor Cyan
-            Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/sites/'+$Group) -Credentials Sysadmin
-            Write-Host 'Conneted to' $Group -ForegroundColor Green
-
+        if($Groups -cnotcontains $null){
+            foreach($Group in $Groups){
+                Write-Host 'Connecting to' $Group -ForegroundColor Cyan
+                Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/sites/'+$Group) -Credentials Sysadmin
+                Write-Host 'Conneted to' $Group -ForegroundColor Green
                     foreach($list in $lists){
                         Write-Host $list 'List:'
                             foreach($SiteField in $SiteFields){
-                                
                                 if(Get-PnPField -Group 'Fletchers'| Where-Object {$_.Title -eq $SiteField}){
-                                        
-                                            if(Get-PnPField -List $list | Where-Object {$_.Title -eq $SiteField}){
-                                                Write-Host '-' $SiteField 'already in' $list
-                                            }else{Add-PnPField -List $list -Field $SiteField
-                                                Write-Host $SiteField 'added to' $list}
-
+                                        if(Get-PnPField -List $list | Where-Object {$_.Title -eq $SiteField}){
+                                            Write-Host '-' $SiteField 'already in' $list
+                                        }else{Add-PnPField -List $list -Field $SiteField
+                                            Write-Host $SiteField 'added to' $list}
                                 } else {Write-Host 'There is no site field with the name' $SiteField -ForegroundColor Red}
                             }
 
                     }
             }
-
+        }
         if($Groups -eq $null){
             Write-Host 'No Group'
                 foreach($list in $lists){

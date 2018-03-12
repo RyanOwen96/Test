@@ -24,4 +24,3 @@ foreach($item in $items){
 #Set-ListURl -List'' -Site'' 
 
 Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/sites/dev1" -Credentials sysadmin 
-

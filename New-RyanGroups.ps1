@@ -32,4 +32,4 @@ function New-RyanGroups{
       Write-Host $DisplayName 'group was made' -ForegroundColor Green 
 
     }
- }
+ } 

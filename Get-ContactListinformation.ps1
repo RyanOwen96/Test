@@ -18,7 +18,6 @@ function Get-ContactListinformation{
          $Group
          )
         
-
         if($Group -eq $null){
             $Web = get-pnpweb 
             Write-Host 'Getting' $web.Title 'contact information' -ForegroundColor Green 
@@ -60,5 +59,3 @@ function Get-ContactListinformation{
         }
 
 }
-
-
