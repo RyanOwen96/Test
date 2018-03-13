@@ -77,22 +77,22 @@ function Set-GroupSiteLists{
                     }
 
                     if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'postcode'}){
-                        }else{
-                            Write-Host 'Postcode field was removed' -ForegroundColor Red
+                        }else{ 
+                            Write-Host 'Postcode field could not be found' -ForegroundColor Red
                             Add-PnPField -List 'Contact' -DisplayName 'Postcode' -InternalName 'postcode' -Type Text -AddToDefaultView
                             Write-Host 'Postcode field now added' -ForegroundColor Green
                         }
 
                     if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'phone'}){
                         }else{
-                            Write-Host 'phone field was removed' -ForegroundColor Red
+                            Write-Host 'phone field could not be found' -ForegroundColor Red
                             Add-PnPField -List 'Contact' -DisplayName 'phone' -InternalName 'phone' -Type Text -AddToDefaultView
                             Write-Host 'phone field now added' -ForegroundColor Green
                         }
 
                     if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'City'}){
                         }else{
-                            Write-Host 'City field was removed' -ForegroundColor Red
+                            Write-Host 'City field could not be found' -ForegroundColor Red
                             Add-PnPField -List 'Contact' -DisplayName 'City' -InternalName 'City' -Type Text -AddToDefaultView
                             Write-Host 'City field now added' -ForegroundColor Green
                         }
@@ -225,10 +225,42 @@ function Set-GroupSiteLists{
                         Write-Host 'Contact list has not been found' -ForegroundColor Red
                         New-PnPList -Title 'Contact' -Template GenericList -Url 'Contact' -OnQuickLaunch
                         Write-Host 'Contact list has now been made' -ForegroundColor Green
-                        Add-PnPField -List 'Contact' -DisplayName 'Postcode' -InternalName 'postcode' -Type Text -AddToDefaultView
-                        Add-PnPField -List 'Contact' -DisplayName 'phone' -InternalName 'phone' -Type Text -AddToDefaultView
-                        Add-PnPField -List 'Contact' -DisplayName 'City' -InternalName 'City' -Type Text -AddToDefaultView
                     }
+                    $GetContact = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Contact'}
+                    if($GetContact.EntityTypeName -eq 'Contact'){
+                        if($GetContact.title -eq 'Contact'){
+                            Write-Host 'Contact list has been found | Title: Contact' -ForegroundColor Gray
+                        }else{
+                            write-host 'Title was' $GetContact.Title 'now Contact' -ForegroundColor Red
+                            Set-PnPList -Identity $GetContact.title -Title 'Contact'
+                        }
+                    }else{
+                        Write-Host 'Contact list has not been found' -ForegroundColor Red
+                        New-PnPList -Title 'Contact' -Template GenericList -Url 'Contact' -OnQuickLaunch
+                        Write-Host 'Contact list has now been made' -ForegroundColor Green
+                    }
+
+                    if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'postcode'}){
+                        }else{ 
+                            Write-Host 'Postcode field could not be found' -ForegroundColor Red
+                            Add-PnPField -List 'Contact' -DisplayName 'Postcode' -InternalName 'postcode' -Type Text -AddToDefaultView
+                            Write-Host 'Postcode field now added' -ForegroundColor Green
+                        }
+
+                    if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'phone'}){
+                        }else{
+                            Write-Host 'phone field could not be found' -ForegroundColor Red
+                            Add-PnPField -List 'Contact' -DisplayName 'phone' -InternalName 'phone' -Type Text -AddToDefaultView
+                            Write-Host 'phone field now added' -ForegroundColor Green
+                        }
+
+                    if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'City'}){
+                        }else{
+                            Write-Host 'City field could not be found' -ForegroundColor Red
+                            Add-PnPField -List 'Contact' -DisplayName 'City' -InternalName 'City' -Type Text -AddToDefaultView
+                            Write-Host 'City field now added' -ForegroundColor Green
+                        }
+
                     #Management
                     if($Management1 -eq 'Yes'){
                         $GetManagement = Get-PnPList | Where-Object {$_.EntityTypeName -eq 'Management'}

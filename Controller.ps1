@@ -1,4 +1,4 @@
-﻿Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/" -Credentials sysadmin
+﻿Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -Credentials sysadmin
 $items = Get-PnPListItem -List 'Main'
 foreach($item in $items){
     Get-RyanListItems -List 'Main' -ID $item.Id
@@ -10,10 +10,8 @@ foreach($item in $items){
         Set-ListSiteColumns -Lists 'Workplaces','Management'-SiteFields 'BSS Number','Subjects','Client Name','Client'
         Get-ContactListinformation -ListitemID $Item.Id 
  
-
         #setting the list to Group items / Email / Site
- 
-             
+   
         } else {    
             Write-Host 'Has no group' -ForegroundColor Red
             New-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] -EmailAddresses $item['FriendlyName'] -MakeGroup
@@ -24,3 +22,6 @@ foreach($item in $items){
 Get-RyanConnection
 
 
+Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/sites/Dev3" -Credentials sysadmin
+
+$error[0].Exception.StackTrace
