@@ -76,18 +76,18 @@ function Set-GroupSiteLists{
                         Write-Host 'Contact list has now been made' -ForegroundColor Green
                     }
 
-                    if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'postcode'}){
+                    if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'Postcode'}){
                         }else{ 
                             Write-Host 'Postcode field could not be found' -ForegroundColor Red
-                            Add-PnPField -List 'Contact' -DisplayName 'Postcode' -InternalName 'postcode' -Type Text -AddToDefaultView
+                            Add-PnPField -List 'Contact' -DisplayName 'Postcode' -InternalName 'Postcode' -Type Text -AddToDefaultView
                             Write-Host 'Postcode field now added' -ForegroundColor Green
                         }
 
-                    if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'phone'}){
+                    if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'Phone'}){
                         }else{
-                            Write-Host 'phone field could not be found' -ForegroundColor Red
-                            Add-PnPField -List 'Contact' -DisplayName 'phone' -InternalName 'phone' -Type Text -AddToDefaultView
-                            Write-Host 'phone field now added' -ForegroundColor Green
+                            Write-Host 'Phone field could not be found' -ForegroundColor Red
+                            Add-PnPField -List 'Contact' -DisplayName 'Phone' -InternalName 'Phone' -Type Text -AddToDefaultView
+                            Write-Host 'Phone field now added' -ForegroundColor Green
                         }
 
                     if(Get-PnPField -List 'Contact'|Where-Object{$_.InternalName -eq 'City'}){

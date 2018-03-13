@@ -25,6 +25,18 @@ function Get-RyanConnection{
     $Credential = "sysadmin@fletcher-dev.co.uk"
     Write-Host "Connecting to SPOService" -ForegroundColor Cyan 
     Connect-SPOService -Url $CredentialURL -Credential $Credential
-    Write-Host "Connected to SPOService" -ForegroundColor Green 
+    Write-Host "Connected to SPOService" -ForegroundColor Green
+    Write-Host 'Connecting to Outlook' -ForegroundColor Cyan
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+    $Credential = Get-Credential `
+    -Credential sysadmin@fletcher-dev.co.uk
+    $Session = New-PSSession `
+    -ConnectionUri https://ps.outlook.com/Powershell `
+    -ConfigurationName Microsoft.Exchange `
+    -Credential $Credential `
+    -Authentication Basic `
+    -AllowRedirection
+    $Exosession = Import-PSSession $Session
+    Write-Host 'Connected to Outlook' -ForegroundColor Green
 }#end function
 

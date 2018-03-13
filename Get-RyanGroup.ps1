@@ -15,6 +15,5 @@ function Get-RyanGroup{
          [Parameter(Mandatory=$True)]
          [string[]]$Url
          )
-
-         Get-PnPUnifiedGroup | Where-Object {$_.SiteUrl -eq 'https://sharepoint121.sharepoint.com/sites/'+ $Url}
+         Get-UnifiedGroup | Where-Object {$_.SharePointSiteUrl -eq 'https://sharepoint121.sharepoint.com/sites/'+ $Url}
 }

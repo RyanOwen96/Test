@@ -9,8 +9,9 @@ foreach($item in $items){
         Set-SiteColumns
         Set-ListSiteColumns -Lists 'Workplaces','Management'-SiteFields 'BSS Number','Subjects','Client Name','Client'
         Get-ContactListinformation -ListitemID $Item.Id 
- 
-        #setting the list to Group items / Email / Site
+
+        #Set-GroupItems -list '' -ListItemId '' -Group '' -Fields 'SiteUrl','Email'
+        #Setting the list to Group items / Email / Site
    
         } else {    
             Write-Host 'Has no group' -ForegroundColor Red
@@ -19,9 +20,11 @@ foreach($item in $items){
 }
 
 
-Get-RyanConnection
 
 
-Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/sites/Dev3" -Credentials sysadmin
 
-$error[0].Exception.StackTrace
+
+
+    Get-RyanConnection
+    Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/sites/Dev3" -Credentials sysadmin
+    $error[0].Exception.StackTrace

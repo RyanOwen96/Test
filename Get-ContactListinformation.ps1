@@ -39,7 +39,8 @@ function Get-ContactListinformation{
         }
 
         if($Group -cnotcontains $null){
-                Write-Host 'Connecting to' $Group -ForegroundColor Green
+            $Web = get-pnpweb 
+            Write-Host 'Getting' $web.Title 'contact information' -ForegroundColor Green 
                 Connect-PnPOnline -Url ('https://sharepoint121.sharepoint.com/Sites/'+ $Group) -Credentials Sysadmin
                 $Contacts = Get-PnPListItem -List 'Contact'
                 Connect-PnPOnline -Url 'https://sharepoint121.sharepoint.com/' -Credentials Sysadmin
