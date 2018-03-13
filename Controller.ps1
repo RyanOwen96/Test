@@ -14,13 +14,13 @@ foreach($item in $items){
         #setting the list to Group items / Email / Site
  
              
-            } else {
-    
+        } else {    
             Write-Host 'Has no group' -ForegroundColor Red
-            New-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] -MakeGroup
-           }
+            New-RyanGroups -DisplayName $item['Title'] -Alias $item['BSS'] -EmailAddresses $item['FriendlyName'] -MakeGroup
+        }
 }
 
-#Set-ListURl -List'' -Site'' 
 
-Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/sites/dev1" -Credentials sysadmin 
+Get-RyanConnection
+
+

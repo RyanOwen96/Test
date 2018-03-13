@@ -27,8 +27,9 @@ function New-RyanGroups{
          )
     if($MakeGroup -eq $true){
 
+      $E = $EmailAddresses + '@fletcher-dev.co.uk'
       Write-Host 'creating group' $DisplayName -ForegroundColor Cyan 
-      New-UnifiedGroup -DisplayName $DisplayName -Alias $Alias -Language (Get-Culture) -EmailAddresses $EmailAddresses -Owner $Owner
+      New-UnifiedGroup -DisplayName $DisplayName -Alias $Alias -Language (Get-Culture) -EmailAddresses $E -Owner $Owner
       Write-Host $DisplayName 'group was made' -ForegroundColor Green 
 
     }

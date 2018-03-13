@@ -25,7 +25,6 @@ function Set-SiteColumns{
          )
         #if not connected to the site it will connect
 if($Groups -cnotcontains $null){
-    Write-Host 'There a group' -ForegroundColor Green
     foreach($Group in $Groups){
         $Web = get-pnpweb
         $W = $web.Url -replace 'https://sharepoint121.sharepoint.com/sites/',''
@@ -76,7 +75,6 @@ if($Groups -cnotcontains $null){
 
 
 if($Groups -eq $null){
-    Write-Host 'There no group' -ForegroundColor Magenta
 #------------------------------------------------------------------------------------------------------------------------------        
     if(Get-PnPField -Group 'Fletchers' | Where-Object {$_.InternalName -eq 'BSS Number'}){
         Write-Host $BSSNumber 'Site Column Found'
