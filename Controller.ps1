@@ -19,12 +19,6 @@ foreach($item in $items){
         }
 }
 
-
-
-
-
-
-
     Get-RyanConnection
     Connect-PnPOnline -Url "https://sharepoint121.sharepoint.com/sites/Dev3" -Credentials sysadmin
     $error[0].Exception.StackTrace

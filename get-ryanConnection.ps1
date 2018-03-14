@@ -31,12 +31,12 @@ function Get-RyanConnection{
     $Credential = Get-Credential `
     -Credential sysadmin@fletcher-dev.co.uk
     $Session = New-PSSession `
-    -ConnectionUri https://ps.outlook.com/Powershell `
+    -ConnectionUri https://ps.outlook.com/Powershell`
     -ConfigurationName Microsoft.Exchange `
     -Credential $Credential `
     -Authentication Basic `
-    -AllowRedirection
-    $Exosession = Import-PSSession $Session
+    -AllowRedirection 
+    #$Exosession = Import-PSSession $Session 
     Write-Host 'Connected to Outlook' -ForegroundColor Green
 }#end function
 
