@@ -31,8 +31,15 @@ function Set-ListSiteColumns{
                                 if(Get-PnPField -Group 'Fletchers'| Where-Object {$_.Title -eq $SiteField}){
                                         if(Get-PnPField -List $list | Where-Object {$_.Title -eq $SiteField}){
                                             Write-Host '-' $SiteField 'already in' $list
-                                        }else{Add-PnPField -List $list -Field $SiteField
-                                            Write-Host $SiteField 'added to' $list}
+                                        }else{
+                                            Add-PnPField -List $list -Field $SiteField
+                                            Write-Host $SiteField 'added to' $list
+                                            $views = Get-PnPView -List 'Main'
+                                                foreach($view in $views){
+                                                    Remove-PnPView -List $list -Identity $view
+                                                }
+                                                Add-PnPView -List $list -Title 'All Items' -Fields 'BSS Number','Client Name','Subjects','Client' -SetAsDefault
+                                        }
                                 } else {Write-Host 'There is no site field with the name' $SiteField -ForegroundColor Red}
                             }
 
@@ -47,8 +54,15 @@ function Set-ListSiteColumns{
                             if(Get-PnPField -Group 'Fletchers'| Where-Object {$_.Title -eq $SiteField}){
                                 if(Get-PnPField -List $list | Where-Object {$_.Title -eq $SiteField}){
                                     Write-Host '-' $SiteField 'already in' $list
-                                }else{Add-PnPField -List $list -Field $SiteField
-                                    Write-Host $SiteField 'added to' $list}
+                                }else{
+                                    Add-PnPField -List $list -Field $SiteField
+                                    Write-Host $SiteField 'added to' $list
+                                    $views = Get-PnPView -List 'Main'
+                                        foreach($view in $views){
+                                            Remove-PnPView -List $list -Identity $view
+                                        }
+                                        Add-PnPView -List $list -Title 'All Items' -Fields  'BSS Number','Client Name','Subjects','Client' -SetAsDefault
+                                }
                     } else {Write-Host 'There is no site field with the name' $SiteField -ForegroundColor Red}
                 }
 

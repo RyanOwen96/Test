@@ -12,24 +12,30 @@ Set-GroupSiteLists -Groups 'Dev1'
 function Set-GroupItems{
     [cmdletBinding()]
         param(
-            [Parameter()]  
+            [Parameter(Mandatory=$True)]  
+            $SiteUrl,
+            [Parameter(Mandatory=$True)]  
             $list,
-            [Parameter()]  
+            [Parameter(Mandatory=$True)]  
             $ListItemId,
-            [Parameter()]  
+            [Parameter(Mandatory=$True)]  
             $Group,
             [Parameter()]  
-            $Fields
+            [Switch]$Site,
+            [Parameter()]  
+            [Switch]$Email
         )
 
 
     $items = Get-PnPListItem -List $list -Id $ListItemId
     foreach($item in $items){
-        connect-pnponline -Url 'https://sharepoint121.sharepoint.com/' -Credentials sysadmin 
+        connect-pnponline -Url $SiteUrl -Credentials sysadmin 
+        $Groupsave = Get-pnpUnifiedGroup -Identity $Group
+        $G = $Groupsave.SiteUrl + ', Link'
+        if($site.IsPresent){Set-PnPListItem -List $list -Identity $ListItemId -Values @{'Site'= $G}}
+        if($Email.IsPresent){Set-PnPListItem -List $list -Identity $ListItemId -Values @{'Email'= $Groupsave.Mail}}
     }
-
 }
 
 
 
-        #Set-GroupItems -list '' -ListItemId '' -Group '' -Fields 'SiteUrl','Email'

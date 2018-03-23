@@ -153,8 +153,8 @@ function Set-GroupSiteLists{
                                 if($GetSubstances.title -eq $Substances){
                                     Write-Host $Substances 'list has been found | Title:'$Substances -ForegroundColor Gray 
                                 }else{
-                                    write-host 'Title was' $Substances.Title 'now' $Substances -ForegroundColor Red
-                                    Set-PnPList -Identity $Substances.title -Title $Substances
+                                    write-host 'Title was' $GetSubstances.Title 'now' $Substances -ForegroundColor Red
+                                    Set-PnPList -Identity $getSubstances.title -Title $Substances
                                 }
                         }else{
                             Write-Host 'The list' $Substances 'was not found' -ForegroundColor Red
@@ -169,8 +169,8 @@ function Set-GroupSiteLists{
                                 if($GetWorkplaces.title -eq $Workplaces){
                                     Write-Host $Workplaces 'list has been found | Title:'$Workplaces -ForegroundColor Gray 
                                 }else{
-                                    write-host 'Title was' $Workplaces.Title 'now' $Workplaces -ForegroundColor Red
-                                    Set-PnPList -Identity $Workplaces.title -Title $Workplaces
+                                    write-host 'Title was' $GetWorkplaces.Title 'now' $Workplaces -ForegroundColor Red
+                                    Set-PnPList -Identity $getWorkplaces.title -Title $Workplaces
                                 }
                         }else{
                             Write-Host 'The list' $Workplaces 'was not found' -ForegroundColor Red
@@ -316,8 +316,8 @@ function Set-GroupSiteLists{
                                 if($GetSubstances.title -eq $Substances){
                                     Write-Host $Substances 'list has been found | Title:'$Substances -ForegroundColor Gray 
                                 }else{
-                                    write-host 'Title was' $Substances.Title 'now' $Substances -ForegroundColor Red
-                                    Set-PnPList -Identity $Substances.title -Title $Substances
+                                    write-host 'Title was' $GetSubstances.Title 'now' $Substances -ForegroundColor Red
+                                    Set-PnPList -Identity $getSubstances.title -Title $Substances
                                 }
                         }else{
                             Write-Host 'The list' $Substances 'was not found' -ForegroundColor Red
@@ -333,7 +333,7 @@ function Set-GroupSiteLists{
                                     Write-Host $Workplaces 'list has been found | Title:'$Workplaces -ForegroundColor Gray 
                                 }else{
                                     write-host 'Title was' $Workplaces.Title 'now' $Workplaces -ForegroundColor Red
-                                    Set-PnPList -Identity $Workplaces.title -Title $Workplaces
+                                    Set-PnPList -Identity $GetWorkplaces.title -Title $Workplaces
                                 }
                         }else{
                             Write-Host 'The list' $Workplaces 'was not found' -ForegroundColor Red
